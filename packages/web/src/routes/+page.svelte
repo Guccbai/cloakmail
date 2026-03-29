@@ -3,10 +3,12 @@
 	import Icon from '@iconify/svelte';
 	import SidebarInfo from '$lib/components/organisms/SidebarInfo.svelte';
 	import { generateRandomPrefix } from '$lib/utils/generateAddress';
-	import { APP_NAME, EMAIL_DOMAIN } from '$lib/config';
+	import { APP_NAME, EMAIL_DOMAINS } from '$lib/config';
 	import { t } from '$lib/i18n/index.svelte';
 
 	let prefix = $state(generateRandomPrefix());
+	let selectedDomain = $state(EMAIL_DOMAINS[0]);
+	let multiDomain = EMAIL_DOMAINS.length > 1;
 
 	function regenerate() {
 		prefix = generateRandomPrefix();
@@ -16,7 +18,7 @@
 		e.preventDefault();
 		const trimmed = prefix.trim();
 		if (!trimmed) return;
-		const address = `${trimmed}@${EMAIL_DOMAIN}`;
+		const address = `${trimmed}@${selectedDomain}`;
 		goto(`/confirm/${encodeURIComponent(address)}`);
 	}
 </script>
@@ -51,9 +53,23 @@
 								class="w-full p-4 font-bold text-xl outline-none bg-transparent placeholder:text-zinc-300"
 								placeholder={t('home.placeholder')}
 							/>
-							<div class="flex items-center px-4 bg-zinc-100 border-l-[3px] border-black font-black text-zinc-500">
-								@{EMAIL_DOMAIN}
-							</div>
+							{#if multiDomain}
+								<div class="flex items-center border-l-[3px] border-black bg-zinc-100">
+									<span class="pl-3 font-black text-zinc-500">@</span>
+									<select
+										bind:value={selectedDomain}
+										class="pr-3 pl-1 py-4 bg-zinc-100 font-black text-zinc-500 outline-none cursor-pointer appearance-auto"
+									>
+										{#each EMAIL_DOMAINS as domain}
+											<option value={domain}>{domain}</option>
+										{/each}
+									</select>
+								</div>
+							{:else}
+								<div class="flex items-center px-4 bg-zinc-100 border-l-[3px] border-black font-black text-zinc-500">
+									@{selectedDomain}
+								</div>
+							{/if}
 						</div>
 						<button
 							type="button"

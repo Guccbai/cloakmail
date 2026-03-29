@@ -21,6 +21,12 @@ export function startSMTP(port = config.smtpPort): SMTPServer {
           : toField?.value?.[0]?.address;
         if (!toAddr) return callback();
 
+        const toDomain = toAddr.split("@")[1];
+        if (toDomain && !config.domains.includes(toDomain)) {
+          console.log(`[smtp] Rejected: ${toAddr} (domain "${toDomain}" not configured)`);
+          return callback();
+        }
+
         const spam = await isSpam(parsed);
         if (spam.isSpam) {
           console.log(`[spam] Rejected: ${toAddr} (reason: ${spam.reason})`);

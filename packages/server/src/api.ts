@@ -101,6 +101,15 @@ export function startAPI(port = config.apiPort) {
         response: t.Object({ deleted: t.Boolean() }),
       },
     )
+    .get(
+      "/api/domains",
+      () => ({ domains: config.domains }),
+      {
+        response: t.Object({
+          domains: t.Array(t.String()),
+        }),
+      },
+    )
     .get("/api/health", async () => ({
       status: "ok",
       smtp: isSMTPRunning(),
