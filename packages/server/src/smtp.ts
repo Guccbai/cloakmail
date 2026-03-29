@@ -10,6 +10,7 @@ export function startSMTP(port = config.smtpPort): SMTPServer {
   server = new SMTPServer({
     authOptional: true,
     disabledCommands: ["AUTH"],
+    disableReverseLookup: true,
     size: config.maxEmailSizeMb * 1024 * 1024,
     onData(stream, _session, callback) {
       simpleParser(stream, async (err, parsed) => {
