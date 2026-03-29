@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/guccbai/cloakmail-server:main
+    image: ghcr.io/guccbai/cloakmail-server:latest
     ports:
       - "25:25"
       - "3000:3000"
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: ghcr.io/guccbai/cloakmail-web:main
+    image: ghcr.io/guccbai/cloakmail-web:latest
     ports:
       - "5173:5173"
     environment:
