@@ -1,6 +1,7 @@
 <script lang="ts">
 	import EmailAvatar from '$lib/components/atoms/EmailAvatar.svelte';
 	import type { Email } from '$lib/types';
+	import { t } from '$lib/i18n/index.svelte';
 
 	interface Props {
 		email: Email;
@@ -13,11 +14,11 @@
 	function formatTimeAgo(iso: string): string {
 		const diff = Date.now() - new Date(iso).getTime();
 		const mins = Math.floor(diff / 60000);
-		if (mins < 1) return 'JUST NOW';
-		if (mins < 60) return `${mins} MIN AGO`;
+		if (mins < 1) return t('email.justNow');
+		if (mins < 60) return t('email.minAgo', { n: mins });
 		const hrs = Math.floor(mins / 60);
-		if (hrs < 24) return `${hrs} HR AGO`;
-		return `${Math.floor(hrs / 24)} DAY AGO`;
+		if (hrs < 24) return t('email.hrAgo', { n: hrs });
+		return t('email.dayAgo', { n: Math.floor(hrs / 24) });
 	}
 
 	function getSenderName(from: string): string {
@@ -54,7 +55,7 @@
 				<div class="mb-8">
 					<h1 class="text-2xl font-black mb-2 uppercase text-black">{email.subject}</h1>
 					<p class="text-sm font-mono border-b border-black inline-block pb-1 text-black">
-						From: <span class="font-bold">{email.from}</span>
+						{t('email.from')} <span class="font-bold">{email.from}</span>
 					</p>
 				</div>
 				{#if email.html}
@@ -63,7 +64,7 @@
 							srcdoc={email.html}
 							sandbox="allow-same-origin"
 							class="w-full min-h-[300px] border-2 border-black bg-white"
-							title="Email content"
+							title={t('email.content')}
 						></iframe>
 					</div>
 				{:else if email.text}

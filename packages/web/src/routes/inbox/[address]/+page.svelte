@@ -6,11 +6,12 @@
 	import CountdownTimer from '$lib/components/molecules/CountdownTimer.svelte';
 	import SafetyNotice from '$lib/components/molecules/SafetyNotice.svelte';
 	import { APP_NAME } from '$lib/config';
+	import { t } from '$lib/i18n/index.svelte';
 
 	let { data } = $props();
 
 	async function handleDeleteAll() {
-		if (!confirm(`Delete all emails for ${data.address}?`)) return;
+		if (!confirm(t('inbox.deleteConfirm', { address: data.address }))) return;
 		await deleteInbox(data.address);
 		await invalidateAll();
 	}

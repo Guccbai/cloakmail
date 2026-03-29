@@ -1,18 +1,11 @@
 <script lang="ts">
-	const tips = [
-		{
-			title: 'Secure',
-			text: 'Public inboxes are visible to anyone. Use with caution for private data.'
-		},
-		{
-			title: 'Expiring',
-			text: 'Everything is deleted after 60 minutes. Extended time coming soon.'
-		},
-		{
-			title: 'Anonymous',
-			text: "We don't track your IP or browser fingerprints. You are a ghost."
-		}
-	];
+	import { t } from '$lib/i18n/index.svelte';
+
+	let tips = $derived([
+		{ title: t('tips.secure'), text: t('tips.secureText') },
+		{ title: t('tips.expiring'), text: t('tips.expiringText') },
+		{ title: t('tips.anonymous'), text: t('tips.anonymousText') }
+	]);
 </script>
 
 <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">

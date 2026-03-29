@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { t } from '$lib/i18n/index.svelte';
+
 	interface Props {
 		totalSeconds?: number;
 		class?: string;
@@ -25,7 +27,7 @@
 
 <div class="bg-white neo-border neo-shadow p-6 flex flex-col gap-4 {className}">
 	<div class="border-b-2 border-black pb-2">
-		<p class="text-xs font-bold uppercase text-zinc-500 mb-1">Self-Destruct In</p>
+		<p class="text-xs font-bold uppercase text-zinc-500 mb-1">{t('countdown.selfDestruct')}</p>
 		<div class="text-3xl font-black font-mono tracking-tighter">{minutes}:{seconds}</div>
 	</div>
 	<div class="h-4 w-full border-2 border-black p-[2px]">

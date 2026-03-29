@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { APP_NAME } from '$lib/config';
+	import LangSwitch from '$lib/components/atoms/LangSwitch.svelte';
+	import { t } from '$lib/i18n/index.svelte';
 
 	interface Props {
 		showGenerate?: boolean;
@@ -21,9 +23,10 @@
 				class="hidden sm:flex items-center gap-2 px-6 py-3 bg-white neo-border neo-shadow-sm text-sm font-bold hover:bg-yellow-400 transition-colors neo-button text-black"
 			>
 				<Icon icon="lucide:plus-circle" class="text-xl" />
-				<span>Generate</span>
+				<span>{t('common.generate')}</span>
 			</a>
 		{/if}
+		<LangSwitch />
 		<a
 			href="https://github.com/DreamsHive/cloakmail"
 			target="_blank"
@@ -31,7 +34,7 @@
 			class="flex items-center gap-2 px-6 py-3 bg-white neo-border neo-shadow-sm text-sm font-bold hover:bg-yellow-400 transition-colors neo-button text-black"
 		>
 			<Icon icon="lucide:github" class="text-xl" />
-			<span>GitHub</span>
+			<span>{t('common.github')}</span>
 		</a>
 	</div>
 </header>

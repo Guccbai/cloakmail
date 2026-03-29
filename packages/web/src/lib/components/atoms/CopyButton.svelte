@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { copyToClipboard } from '$lib/utils/clipboard';
+	import { t } from '$lib/i18n/index.svelte';
 
 	interface Props {
 		text: string;
@@ -37,9 +38,9 @@
 >
 	{#if copied}
 		<Icon icon="lucide:check" class="text-xl" />
-		<span class="uppercase tracking-wider">Copied!</span>
+		<span class="uppercase tracking-wider">{t('common.copied')}</span>
 	{:else}
 		<Icon icon="lucide:copy" class="text-xl" />
-		<span class="uppercase tracking-wider">Copy Address</span>
+		<span class="uppercase tracking-wider">{t('common.copyAddress')}</span>
 	{/if}
 </button>

@@ -3,6 +3,7 @@
 	import EmailRow from '$lib/components/molecules/EmailRow.svelte';
 	import type { Email } from '$lib/types';
 	import { fetchEmail } from '$lib/api';
+	import { t } from '$lib/i18n/index.svelte';
 
 	type SortOrder = 'newest' | 'oldest';
 
@@ -55,21 +56,21 @@
 	<!-- Toolbar -->
 	<div class="p-4 md:p-6 border-b-[3px] border-black flex justify-between items-center bg-zinc-50 sticky top-0 z-20">
 		<div class="flex items-center gap-4">
-			<h2 class="text-xl font-black uppercase">Inbox</h2>
+			<h2 class="text-xl font-black uppercase">{t('inbox.heading')}</h2>
 			{#if totalEmails > 0}
 				<span class="bg-black text-white text-xs font-bold px-3 py-1 border-2 border-black">
-					{totalEmails} {totalEmails === 1 ? 'EMAIL' : 'EMAILS'}
+					{totalEmails} {totalEmails === 1 ? t('inbox.email') : t('inbox.emails')}
 				</span>
 			{/if}
 		</div>
 		<div class="flex items-center gap-3">
 			<div class="text-xs font-bold uppercase text-zinc-500 hidden sm:block mr-2">
-				{sortOrder === 'newest' ? 'Newest first' : 'Oldest first'}
+				{sortOrder === 'newest' ? t('inbox.newestFirst') : t('inbox.oldestFirst')}
 			</div>
 			<button
 				onclick={toggleSort}
 				class="w-10 h-10 flex items-center justify-center border-2 border-black hover:bg-yellow-400 transition-colors {sortOrder === 'oldest' ? 'bg-yellow-400' : 'bg-white'}"
-				title="Toggle sort order"
+				title={t('inbox.toggleSort')}
 			>
 				<Icon icon={sortOrder === 'newest' ? 'lucide:arrow-down-narrow-wide' : 'lucide:arrow-up-narrow-wide'} />
 			</button>
@@ -89,7 +90,7 @@
 		{#if emails.length === 0}
 			<div class="grow flex flex-col items-center justify-center text-center p-8 text-zinc-400 min-h-75">
 				<Icon icon="lucide:inbox" class="text-4xl mb-2 opacity-30" />
-				<p class="text-sm font-bold uppercase">Waiting for incoming mail...</p>
+				<p class="text-sm font-bold uppercase">{t('inbox.waiting')}</p>
 			</div>
 		{/if}
 	</div>

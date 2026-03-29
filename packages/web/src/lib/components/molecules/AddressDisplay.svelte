@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { copyToClipboard } from '$lib/utils/clipboard';
+	import { t } from '$lib/i18n/index.svelte';
 
 	interface Props {
 		address: string;
@@ -22,7 +23,7 @@
 
 <div class="w-full bg-zinc-100 neo-border p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 group hover:bg-white transition-colors {className}">
 	<div class="text-left">
-		<span class="block text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">Disposable Email</span>
+		<span class="block text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">{t('address.disposableEmail')}</span>
 		<span class="text-2xl md:text-4xl font-black break-all">{address}</span>
 	</div>
 	<button
@@ -31,10 +32,10 @@
 	>
 		{#if copied}
 			<Icon icon="lucide:check" class="text-2xl" />
-			<span>Copied!</span>
+			<span>{t('common.copied')}</span>
 		{:else}
 			<Icon icon="lucide:copy" class="text-2xl" />
-			<span>Copy</span>
+			<span>{t('common.copy')}</span>
 		{/if}
 	</button>
 </div>

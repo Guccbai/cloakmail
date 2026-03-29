@@ -2,12 +2,18 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { onNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import AppHeader from '$lib/components/organisms/AppHeader.svelte';
 	import AppFooter from '$lib/components/organisms/AppFooter.svelte';
 	import { APP_NAME } from '$lib/config';
+	import { initLocale } from '$lib/i18n/index.svelte';
 
 	let { children } = $props();
+
+	onMount(() => {
+		initLocale();
+	});
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;

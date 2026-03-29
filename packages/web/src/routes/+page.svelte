@@ -4,6 +4,7 @@
 	import SidebarInfo from '$lib/components/organisms/SidebarInfo.svelte';
 	import { generateRandomPrefix } from '$lib/utils/generateAddress';
 	import { APP_NAME, EMAIL_DOMAIN } from '$lib/config';
+	import { t } from '$lib/i18n/index.svelte';
 
 	let prefix = $state(generateRandomPrefix());
 
@@ -21,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Generate Address - {APP_NAME}</title>
+	<title>{t('home.title', { appName: APP_NAME })}</title>
 </svelte:head>
 
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -30,8 +31,8 @@
 	<!-- Address Generator Form -->
 	<div class="lg:col-span-8 bg-white neo-border neo-shadow flex flex-col grow">
 		<div class="p-4 md:p-6 border-b-[3px] border-black flex justify-between items-center bg-zinc-50">
-			<h2 class="text-xl font-black uppercase">Address Generator</h2>
-			<div class="bg-yellow-400 border-2 border-black px-3 py-1 text-xs font-black uppercase">Step 01/02</div>
+			<h2 class="text-xl font-black uppercase">{t('home.heading')}</h2>
+			<div class="bg-yellow-400 border-2 border-black px-3 py-1 text-xs font-black uppercase">{t('home.step')}</div>
 		</div>
 
 		<div class="grow p-6 md:p-12 lg:p-16 flex flex-col justify-center items-center">
@@ -39,7 +40,7 @@
 				<!-- Prefix Input -->
 				<div>
 					<label for="prefix-input" class="block text-xs font-black uppercase tracking-widest mb-3">
-						Choose your prefix
+						{t('home.choosePrefix')}
 					</label>
 					<div class="flex gap-4">
 						<div class="grow flex border-[3px] border-black bg-white neo-shadow-sm">
@@ -48,7 +49,7 @@
 								type="text"
 								bind:value={prefix}
 								class="w-full p-4 font-bold text-xl outline-none bg-transparent placeholder:text-zinc-300"
-								placeholder="e.g. shadow.walker"
+								placeholder={t('home.placeholder')}
 							/>
 							<div class="flex items-center px-4 bg-zinc-100 border-l-[3px] border-black font-black text-zinc-500">
 								@{EMAIL_DOMAIN}
@@ -70,11 +71,11 @@
 						type="submit"
 						class="w-full flex items-center justify-center gap-3 bg-yellow-400 border-[3px] border-black p-6 neo-shadow neo-button text-2xl font-black uppercase tracking-tighter hover:bg-yellow-300 transition-colors"
 					>
-						<span>Initialize Inbox</span>
+						<span>{t('home.submit')}</span>
 						<Icon icon="lucide:zap" class="text-3xl" />
 					</button>
 					<p class="text-center mt-6 text-[10px] font-black uppercase text-zinc-400 tracking-widest">
-						By clicking initialize, you agree to our fair usage policy.
+						{t('home.disclaimer')}
 					</p>
 				</div>
 			</form>
