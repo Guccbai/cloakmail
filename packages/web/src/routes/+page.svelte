@@ -3,12 +3,15 @@
 	import Icon from '@iconify/svelte';
 	import SidebarInfo from '$lib/components/organisms/SidebarInfo.svelte';
 	import { generateRandomPrefix } from '$lib/utils/generateAddress';
-	import { APP_NAME, EMAIL_DOMAINS } from '$lib/config';
+	import { APP_NAME, EMAIL_DOMAINS, WILDCARD_DOMAINS } from '$lib/config';
 	import { t } from '$lib/i18n/index.svelte';
 
 	let prefix = $state(generateRandomPrefix());
 	let selectedDomain = $state(EMAIL_DOMAINS[0]);
+	let subdomain = $state('');
 	let multiDomain = EMAIL_DOMAINS.length > 1;
+
+	let showSubdomain = $derived(WILDCARD_DOMAINS.has(selectedDomain));
 
 	function regenerate() {
 		prefix = generateRandomPrefix();
@@ -18,7 +21,12 @@
 		e.preventDefault();
 		const trimmed = prefix.trim();
 		if (!trimmed) return;
-		const address = `${trimmed}@${selectedDomain}`;
+
+		const sub = subdomain.trim().toLowerCase();
+		if (sub && !/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(sub)) return;
+
+		const domain = sub ? `${sub}.${selectedDomain}` : selectedDomain;
+		const address = `${trimmed}@${domain}`;
 		goto(`/confirm/${encodeURIComponent(address)}`);
 	}
 </script>
@@ -53,9 +61,20 @@
 								class="w-full p-4 font-bold text-xl outline-none bg-transparent placeholder:text-zinc-300"
 								placeholder={t('home.placeholder')}
 							/>
-							{#if multiDomain}
-								<div class="flex items-center border-l-[3px] border-black bg-zinc-100">
-									<span class="pl-3 font-black text-zinc-500">@</span>
+							<div class="flex items-center border-l-[3px] border-black bg-zinc-100">
+								<span class="pl-3 font-black text-zinc-500">@</span>
+								{#if showSubdomain}
+									<input
+										type="text"
+										bind:value={subdomain}
+										pattern="[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?"
+										maxlength="63"
+										class="w-20 md:w-24 py-4 pl-1 bg-zinc-100 font-bold text-zinc-700 outline-none placeholder:text-zinc-300 placeholder:font-normal"
+										placeholder={t('home.subdomainPlaceholder')}
+									/>
+									<span class="font-black text-zinc-400">.</span>
+								{/if}
+								{#if multiDomain}
 									<select
 										bind:value={selectedDomain}
 										class="pr-3 pl-1 py-4 bg-zinc-100 font-black text-zinc-500 outline-none cursor-pointer appearance-auto"
@@ -64,12 +83,10 @@
 											<option value={domain}>{domain}</option>
 										{/each}
 									</select>
-								</div>
-							{:else}
-								<div class="flex items-center px-4 bg-zinc-100 border-l-[3px] border-black font-black text-zinc-500">
-									@{selectedDomain}
-								</div>
-							{/if}
+								{:else}
+									<span class="pr-4 pl-1 font-black text-zinc-500">{selectedDomain}</span>
+								{/if}
+							</div>
 						</div>
 						<button
 							type="button"
@@ -79,6 +96,11 @@
 							<Icon icon="lucide:refresh-cw" class="text-2xl group-active:rotate-180 transition-transform duration-300" />
 						</button>
 					</div>
+					{#if showSubdomain}
+						<p class="mt-2 text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+							{t('home.subdomainHint')}
+						</p>
+					{/if}
 				</div>
 
 				<!-- Submit -->

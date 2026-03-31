@@ -103,10 +103,14 @@ export function startAPI(port = config.apiPort) {
     )
     .get(
       "/api/domains",
-      () => ({ domains: config.domains }),
+      () => ({
+        domains: [...new Set([...config.domains, ...config.wildcardBaseDomains])],
+        wildcardDomains: config.wildcardBaseDomains,
+      }),
       {
         response: t.Object({
           domains: t.Array(t.String()),
+          wildcardDomains: t.Array(t.String()),
         }),
       },
     )

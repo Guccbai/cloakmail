@@ -2,7 +2,7 @@ import { SMTPServer } from "smtp-server";
 import { simpleParser } from "mailparser";
 import { storeEmail } from "./store";
 import { isSpam } from "./spam";
-import { config } from "./config";
+import { config, isDomainAllowed } from "./config";
 
 let server: SMTPServer | null = null;
 
@@ -23,7 +23,7 @@ export function startSMTP(port = config.smtpPort): SMTPServer {
         if (!toAddr) return callback();
 
         const toDomain = toAddr.split("@")[1];
-        if (toDomain && !config.domains.includes(toDomain)) {
+        if (toDomain && !isDomainAllowed(toDomain)) {
           console.log(`[smtp] Rejected: ${toAddr} (domain "${toDomain}" not configured)`);
           return callback();
         }

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { config } from "../config";
+import { config, isDomainAllowed } from "../config";
 
 describe("config", () => {
 	test("has default smtpPort as a number", () => {
@@ -27,5 +27,19 @@ describe("config", () => {
 	test("has default maxEmailSizeMb as a number", () => {
 		expect(typeof config.maxEmailSizeMb).toBe("number");
 		expect(config.maxEmailSizeMb).toBeGreaterThan(0);
+	});
+
+	test("has wildcardBaseDomains as an array", () => {
+		expect(Array.isArray(config.wildcardBaseDomains)).toBe(true);
+	});
+
+	test("isDomainAllowed accepts configured exact domains", () => {
+		for (const d of config.domains) {
+			expect(isDomainAllowed(d)).toBe(true);
+		}
+	});
+
+	test("isDomainAllowed rejects unknown domains", () => {
+		expect(isDomainAllowed("not-configured-domain.example")).toBe(false);
 	});
 });

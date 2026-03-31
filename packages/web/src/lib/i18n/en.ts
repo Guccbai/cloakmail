@@ -21,6 +21,8 @@ const en = {
 		step: 'Step 01/02',
 		choosePrefix: 'Choose your prefix',
 		placeholder: 'e.g. shadow.walker',
+		subdomainPlaceholder: 'custom',
+		subdomainHint: 'Optional: add a custom subdomain for personalization',
 		submit: 'Initialize Inbox',
 		disclaimer: 'By clicking initialize, you agree to our fair usage policy.'
 	},
@@ -57,7 +59,7 @@ const en = {
 		protocolRules: 'Protocol Rules',
 		rule1: 'Addresses expire after 60 minutes of inactivity.',
 		rule2: 'Unlimited incoming emails while active.',
-		rule3: 'Custom prefixes allowed for personalization.',
+		rule3: 'Custom prefixes and subdomains allowed for personalization.',
 		safetyTitle: 'Safety Notice:',
 		safetyMessage:
 			'{appName} is for temporary use only. Do not use for sensitive account recovery or long-term storage.'

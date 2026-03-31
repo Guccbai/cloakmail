@@ -21,6 +21,8 @@ const zh = {
 		step: '步骤 01/02',
 		choosePrefix: '选择你的前缀',
 		placeholder: '例如 shadow.walker',
+		subdomainPlaceholder: '自定义',
+		subdomainHint: '可选：添加自定义子域名以个性化地址',
 		submit: '初始化收件箱',
 		disclaimer: '点击初始化即表示您同意我们的使用规范。'
 	},
@@ -56,7 +58,7 @@ const zh = {
 		protocolRules: '使用规则',
 		rule1: '地址在 60 分钟无活动后过期。',
 		rule2: '活跃期间可接收无限邮件。',
-		rule3: '支持自定义前缀以个性化地址。',
+		rule3: '支持自定义前缀和子域名以个性化地址。',
 		safetyTitle: '安全提示：',
 		safetyMessage: '{appName} 仅供临时使用。请勿用于敏感账户恢复或长期存储。'
 	},
