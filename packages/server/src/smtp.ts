@@ -12,6 +12,9 @@ export function startSMTP(port = config.smtpPort): SMTPServer {
     disabledCommands: ["AUTH"],
     disableReverseLookup: true,
     size: config.maxEmailSizeMb * 1024 * 1024,
+    onError(err) {
+      console.log(`[smtp] Server error: ${err.message}`);
+    },
     onData(stream, _session, callback) {
       simpleParser(stream, async (err, parsed) => {
         if (err) return callback(err);
@@ -52,6 +55,10 @@ export function startSMTP(port = config.smtpPort): SMTPServer {
         callback();
       });
     },
+  });
+
+  server.on("error", (err) => {
+    console.log(`[smtp] Server error: ${err.message}`);
   });
 
   server.listen(port, () => {
